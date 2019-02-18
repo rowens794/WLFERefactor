@@ -13,7 +13,7 @@ class Dashboard extends Component {
   constructor(props) {
     super();
 
-    this.compData = this.compData.bind(this);
+    this.getCompData = this.getCompData.bind(this);
     this.updateCompData = this.updateCompData.bind(this);
 
     this.state = {
@@ -28,7 +28,7 @@ class Dashboard extends Component {
     };
   }
 
-  async compData(id, compAdmin) {
+  async getCompData(id, compAdmin) {
     let self = this;
 
     //test if competition is loaded in state
@@ -131,7 +131,7 @@ class Dashboard extends Component {
                   md={{ size: 3, offset: 0 }}
                   lg={{ size: 2, offset: 0 }}
                 >
-                  <Sidebar userInfo={this.state} compData={this.compData} />
+                  <Sidebar userInfo={this.state} getCompData={this.getCompData} />
                 </Col>
 
                 <Col
@@ -147,6 +147,7 @@ class Dashboard extends Component {
                     competitionAdmin={this.state.competitionAdmin}
                     competitions={this.state.competitions}
                     compData={this.state.compData}
+                    getCompData={this.getCompData}
                     userName={this.state.userName}
                     email={this.state.email}
                   />
@@ -194,7 +195,7 @@ class Dashboard extends Component {
           }
 
           //set the active competition
-          self.compData(competitionToRetrieve);
+          self.getCompData(competitionToRetrieve);
         }
       })
       .catch(function(error) {

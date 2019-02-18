@@ -22,7 +22,7 @@ class Sidebar extends Component {
                 <div
                   className={css(styles.compLink)}
                   key={comp.id}
-                  onClick={() => this.props.compData(comp.id, comp.admin)}
+                  onClick={() => this.props.getCompData(comp.id, comp.admin)}
                 >
                   {' '}
                   {comp.name}{' '}

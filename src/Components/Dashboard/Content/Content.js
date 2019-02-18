@@ -64,7 +64,11 @@ class Content extends Component {
         <Container className="d-sm-none p-0">
           {this.state.competitions ? (
             this.state.competitions.length > 1 ? (
-              <XSCompList compList={this.state.competitions} compData={this.props.compData} />
+              <XSCompList
+                compList={this.state.competitions}
+                compData={this.props.compData}
+                getCompData={this.props.getCompData}
+              />
             ) : null
           ) : null}
         </Container>
