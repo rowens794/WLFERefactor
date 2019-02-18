@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactGA.initialize('UA-131158659-1');
+
 ReactDOM.render(
   <Sentry>
     <App />

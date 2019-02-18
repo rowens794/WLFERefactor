@@ -117,7 +117,6 @@ class Dashboard extends Component {
     } else if (localStorage.getItem('accountVerified') === 'false') {
       acctVerified = false;
     }
-    console.log(acctVerified);
 
     return (
       <MyContext.Consumer>
@@ -189,13 +188,8 @@ class Dashboard extends Component {
 
           var competitionToRetrieve = null;
           if (response.data.lastActiveCompetition) {
-            console.log('in if');
             competitionToRetrieve = response.data.lastActiveCompetition;
           } else {
-            console.log('in else');
-            console.log('-----------------------------------------');
-            console.log(response.data.competitions[0]);
-            console.log(competitionToRetrieve);
             competitionToRetrieve = response.data.competitions[0].id;
           }
 
@@ -204,7 +198,6 @@ class Dashboard extends Component {
         }
       })
       .catch(function(error) {
-        console.log('in catch');
         self.setState({
           // this should only be hit if there is a server error
           errorMsg: 'Something went very wrong.  Signout and signback in.',
