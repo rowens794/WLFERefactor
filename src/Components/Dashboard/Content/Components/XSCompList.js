@@ -33,7 +33,6 @@ class XSCompList extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className={css(styles.mobileBar)}>
         <Spring
@@ -60,7 +59,7 @@ class XSCompList extends Component {
         </Spring>
 
         <p className={css(styles.toggler)} onClick={() => this.showHideToggle()}>
-          {this.state.label}
+          {this.state.label} ({this.props.compList.length})
         </p>
       </div>
     );
@@ -75,11 +74,12 @@ const styles = StyleSheet.create({
     width: '100%',
     color: colors.white,
     marginTop: '-1px',
+    paddingTop: '25px',
     paddingBottom: '5px',
   },
   toggler: {
     backgroundColor: colors.grey,
-    paddingTop: '15px',
+    paddingTop: '0px',
     fontWeight: 'bold',
   },
 });
