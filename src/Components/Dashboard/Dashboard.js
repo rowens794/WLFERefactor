@@ -195,7 +195,9 @@ class Dashboard extends Component {
           }
 
           //set the active competition
-          self.getCompData(competitionToRetrieve);
+          if (competitionToRetrieve) {
+            self.getCompData(competitionToRetrieve);
+          }
         }
       })
       .catch(function(error) {
