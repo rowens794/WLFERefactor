@@ -33,6 +33,14 @@ class ManageSubscriptions extends Component {
               // this should only be hit if user messes with token
               responseMsg: 'Failed to indentify current user',
             });
+          } else if (response.data.status === 'tokenExpired') {
+            console.log(response.data.status);
+            localStorage.removeItem('userToken');
+            localStorage.removeItem('tokenExp');
+            localStorage.removeItem('userID');
+            localStorage.removeItem('accountVerified');
+            this.forceUpdate();
+            window.location.replace('/');
           } else {
             self.setState({
               userLoggedIn: true,

@@ -29,7 +29,17 @@ class Dashboard extends Component {
   }
 
   async getCompData(id, compAdmin) {
-    let self = this;
+    var self = this;
+
+    // Sign out user if token expired
+    const currentTime = new Date();
+    if (localStorage.getItem('tokenExp') <= currentTime) {
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('tokenExp');
+      localStorage.removeItem('userID');
+      localStorage.removeItem('accountVerified');
+      window.location.replace('/');
+    }
 
     //test if competition is loaded in state
     if (this.state.activeCompetition) {
@@ -46,6 +56,12 @@ class Dashboard extends Component {
                 // this should only be hit if user messes with token
                 errorMsg: 'Something went very wrong.  Signout and signback in.',
               });
+            } else if (response.data.status === 'tokenExpired') {
+              localStorage.removeItem('userToken');
+              localStorage.removeItem('tokenExp');
+              localStorage.removeItem('userID');
+              localStorage.removeItem('accountVerified');
+              window.location.replace('/');
             } else {
               self.setState({
                 activeCompetition: response.data,
@@ -71,6 +87,12 @@ class Dashboard extends Component {
               // this should only be hit if user messes with token
               errorMsg: 'Something went very wrong.  Signout and signback in.',
             });
+          } else if (response.data.status === 'tokenExpired') {
+            localStorage.removeItem('userToken');
+            localStorage.removeItem('tokenExp');
+            localStorage.removeItem('userID');
+            localStorage.removeItem('accountVerified');
+            window.location.replace('/');
           } else {
             self.setState({
               activeCompetition: response.data,
@@ -99,6 +121,12 @@ class Dashboard extends Component {
             // this should only be hit if user messes with token
             errorMsg: 'Something went very wrong.  Signout and signback in.',
           });
+        } else if (response.data.status === 'tokenExpired') {
+          localStorage.removeItem('userToken');
+          localStorage.removeItem('tokenExp');
+          localStorage.removeItem('userID');
+          localStorage.removeItem('accountVerified');
+          window.location.replace('/');
         } else {
           self.setState({
             activeCompetition: response.data,
@@ -116,6 +144,16 @@ class Dashboard extends Component {
       acctVerified = true;
     } else if (localStorage.getItem('accountVerified') === 'false') {
       acctVerified = false;
+    }
+
+    // Sign out user if token expired
+    const currentTime = new Date();
+    if (localStorage.getItem('tokenExp') <= currentTime) {
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('tokenExp');
+      localStorage.removeItem('userID');
+      localStorage.removeItem('accountVerified');
+      window.location.replace('/');
     }
 
     return (
@@ -166,6 +204,18 @@ class Dashboard extends Component {
 
   async componentDidMount() {
     const self = this; //'this' loses context in axios function ... set to var 'self'
+    var tokenExpired = false;
+    console.log('in did mount');
+    console.log(localStorage.getItem('userToken'));
+
+    if (localStorage.getItem('userToken') == null) {
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('tokenExp');
+      localStorage.removeItem('userID');
+      localStorage.removeItem('accountVerified');
+      tokenExpired = true;
+      window.location.replace('/');
+    }
 
     axios
       .post(Config.backendRootURL + '/userData', {
@@ -177,6 +227,14 @@ class Dashboard extends Component {
             // this should only be hit if user messes with token
             errorMsg: 'Something went very wrong.  Signout and signback in.',
           });
+        } else if (response.data.status === 'tokenExpired') {
+          console.log(response.data.status);
+          localStorage.removeItem('userToken');
+          localStorage.removeItem('tokenExp');
+          localStorage.removeItem('userID');
+          localStorage.removeItem('accountVerified');
+          tokenExpired = true;
+          window.location.replace('/');
         } else {
           self.setState({
             userName: response.data.name,
@@ -208,29 +266,37 @@ class Dashboard extends Component {
         Sentry.captureException(error);
       });
 
-    axios
-      .post(Config.backendRootURL + '/userCompData', {
-        token: localStorage.getItem('userToken'), //fetch the JWT from local storage
-      })
-      .then(function(response) {
-        if (response.data.status === 'failed') {
+    if (!tokenExpired) {
+      axios
+        .post(Config.backendRootURL + '/userCompData', {
+          token: localStorage.getItem('userToken'), //fetch the JWT from local storage
+        })
+        .then(function(response) {
+          if (response.data.status === 'failed') {
+            self.setState({
+              // this should only be hit if user messes with token
+              errorMsg: 'Something went very wrong.  Signout and signback in.',
+            });
+          } else if (response.data.status === 'tokenExpired') {
+            localStorage.removeItem('userToken');
+            localStorage.removeItem('tokenExp');
+            localStorage.removeItem('userID');
+            localStorage.removeItem('accountVerified');
+            window.location.replace('/');
+          } else {
+            self.setState({
+              userName: response.data.name,
+            });
+          }
+        })
+        .catch(function(error) {
           self.setState({
-            // this should only be hit if user messes with token
+            // this should only be hit if there is a server error
             errorMsg: 'Something went very wrong.  Signout and signback in.',
           });
-        } else {
-          self.setState({
-            userName: response.data.name,
-          });
-        }
-      })
-      .catch(function(error) {
-        self.setState({
-          // this should only be hit if there is a server error
-          errorMsg: 'Something went very wrong.  Signout and signback in.',
+          Sentry.captureException(error);
         });
-        Sentry.captureException(error);
-      });
+    }
   }
 }
 
