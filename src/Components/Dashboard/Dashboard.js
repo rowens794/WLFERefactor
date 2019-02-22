@@ -203,7 +203,7 @@ class Dashboard extends Component {
   }
 
   async componentDidMount() {
-    const self = this; //'this' loses context in axios function ... set to var 'self'
+    var self = this; //'this' loses context in axios function ... set to var 'self'
     var tokenExpired = false;
     console.log('in did mount');
     console.log(localStorage.getItem('userToken'));
@@ -243,18 +243,13 @@ class Dashboard extends Component {
             lastActiveCompetition: response.data.lastActiveCompetition,
           });
 
-          //check if last active competition datapoint exists in user
-
-          var competitionToRetrieve = null;
+          // check if last active competition datapoint exists in user
+          // if it doesn't then check to see if any competittions exist
+          // if none exist then don't get competition data
           if (response.data.lastActiveCompetition) {
-            competitionToRetrieve = response.data.lastActiveCompetition;
-          } else {
-            competitionToRetrieve = response.data.competitions[0].id;
-          }
-
-          //set the active competition
-          if (competitionToRetrieve) {
-            self.getCompData(competitionToRetrieve);
+            self.getCompData(response.data.lastActiveCompetition);
+          } else if (response.data.competitions.length >= 1) {
+            self.getCompData(response.data.competitions[0].id);
           }
         }
       })
