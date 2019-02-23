@@ -205,8 +205,6 @@ class Dashboard extends Component {
   async componentDidMount() {
     var self = this; //'this' loses context in axios function ... set to var 'self'
     var tokenExpired = false;
-    console.log('in did mount');
-    console.log(localStorage.getItem('userToken'));
 
     if (localStorage.getItem('userToken') == null) {
       localStorage.removeItem('userToken');
