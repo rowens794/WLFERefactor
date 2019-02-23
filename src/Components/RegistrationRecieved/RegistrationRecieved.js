@@ -67,7 +67,8 @@ class RegistrationRecieved extends Component {
   }
 
   componentWillMount() {
-    if (localStorage.getItem('userToken') !== undefined) {
+    console.log(localStorage.getItem('userToken'));
+    if (localStorage.getItem('userToken') !== null) {
       this.setState({
         userLoggedIn: true,
       });
