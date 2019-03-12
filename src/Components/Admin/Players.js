@@ -4,7 +4,6 @@ import { StyleSheet, css } from 'aphrodite';
 export default class Players extends Component {
   render() {
     let players = this.props.players;
-    console.log(players[38]);
     return (
       <div className={css(styles.body)}>
         <h2>All Users</h2>

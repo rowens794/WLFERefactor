@@ -29,7 +29,6 @@ export default class Competitions extends Component {
               let numOfInvites = null;
               if (competition.players) numOfPlayers = competition.players.length;
               if (competition.invites) numOfInvites = competition.invites.length;
-              console.log(competition);
 
               return (
                 <tr key={competition.id}>

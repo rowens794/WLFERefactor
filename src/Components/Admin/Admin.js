@@ -13,6 +13,7 @@ import Competitions from './Competitions';
 export default class Admin extends Component {
   constructor(props) {
     super();
+    this.isEmptyObj = this.isEmptyObj.bind(this);
 
     this.state = {
       ident: null,
@@ -21,6 +22,13 @@ export default class Admin extends Component {
       clicks: null,
     };
   }
+
+  isEmptyObj = (obj) => {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) return false;
+    }
+    return true;
+  };
 
   login = (val) => {
     var self = this;
@@ -31,6 +39,8 @@ export default class Admin extends Component {
       })
       .then(function(response) {
         if (response.data.login === 'failed') {
+        } else if (self.isEmptyObj(response.data.comps)) {
+        } else if (self.isEmptyObj(response.data.users)) {
         } else {
           localStorage.setItem('AdminEntryToken', response.data.ident);
           self.setState({
@@ -64,7 +74,7 @@ export default class Admin extends Component {
           </Container>
         )}
 
-        {this.state.users && (
+        {this.state.competitions && (
           <div>
             <Competitions competitions={this.state.competitions} />
             <Players players={this.state.users} />
