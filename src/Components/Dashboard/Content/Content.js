@@ -13,6 +13,7 @@ import NotStartedAdmin from './Components/NotStartedAdmin';
 import XSCompList from './Components/XSCompList';
 import WinnersCircle from './Components/WinnersCircle';
 import ContentHolder from './Components/ContentHolder';
+import DeleteCompetition from './Components/DeleteCompetition';
 
 class Content extends Component {
   constructor(props) {
@@ -27,6 +28,10 @@ class Content extends Component {
       xsExpander: false,
     };
   }
+
+  deleteCompetition = () => {
+    this.props.reRenderDash();
+  };
 
   componentWillMount() {
     if (localStorage.getItem('userToken') == null) {
@@ -59,10 +64,6 @@ class Content extends Component {
   }
 
   render() {
-    console.log('--------------------------------');
-    console.log('this.props.compData');
-    console.log(this.props.compData);
-    console.log('********************************');
     return (
       <div>
         <Container className="d-sm-none p-0">
@@ -87,6 +88,7 @@ class Content extends Component {
               >
                 <h2 className={css(styles.title)}>{this.state.competitionName}</h2>
                 <p className={css(styles.date)}>Competition ID: {this.state.competitionData._id}</p>
+                <DeleteCompetition deleteCompetition={this.deleteCompetition} admin={this.state.competitionAdmin} />
               </Col>
             </Row>
 
@@ -239,7 +241,6 @@ const styles = StyleSheet.create({
   },
   date: {
     paddingLeft: '60px',
-    paddingBottom: '50px',
     fontStyle: 'italic',
     textAlign: 'left',
     fontSize: '1em',

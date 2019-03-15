@@ -189,7 +189,6 @@ class CreateComp extends Component {
         errorParticipants: errorObject.errorParticipants,
         errorMessage: errorObject.errorMessage,
       });
-      console.log('errors occured');
     }
   }
 

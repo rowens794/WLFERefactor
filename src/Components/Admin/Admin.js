@@ -3,7 +3,6 @@ import { StyleSheet, css } from 'aphrodite';
 import { Container, Row, Col } from 'reactstrap';
 import axios from 'axios';
 
-import colors from '../Styling/styles';
 import Button from '../Elements/Button';
 import Config from '../Config/config';
 

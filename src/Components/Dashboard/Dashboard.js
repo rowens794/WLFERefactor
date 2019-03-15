@@ -15,6 +15,8 @@ class Dashboard extends Component {
 
     this.getCompData = this.getCompData.bind(this);
     this.updateCompData = this.updateCompData.bind(this);
+    this.getAdminStatus = this.getAdminStatus.bind(this);
+    this.reRenderDash = this.reRenderDash.bind(this);
 
     this.state = {
       userName: '',
@@ -28,7 +30,20 @@ class Dashboard extends Component {
     };
   }
 
-  async getCompData(id, compAdmin) {
+  reRenderDash = async () => {
+    var self = this;
+    await axios
+      .post(Config.backendRootURL + '/deleteCompetition', {
+        token: localStorage.getItem('userToken'), //fetch the JWT from local storage
+        competitionID: self.state.activeCompetition._id,
+        admin: self.state.competitionAdmin,
+      })
+      .then(function(response) {
+        window.location = '/dashboard';
+      });
+  };
+
+  async getCompData(id) {
     var self = this;
 
     // Sign out user if token expired
@@ -65,7 +80,6 @@ class Dashboard extends Component {
             } else {
               self.setState({
                 activeCompetition: response.data,
-                competitionAdmin: compAdmin,
                 compData: response.data,
               });
             }
@@ -96,7 +110,6 @@ class Dashboard extends Component {
           } else {
             self.setState({
               activeCompetition: response.data,
-              competitionAdmin: compAdmin,
               compData: response.data,
             });
           }
@@ -137,6 +150,16 @@ class Dashboard extends Component {
         Sentry.captureException(error);
       });
   }
+
+  getAdminStatus = (competitions, competitionToCheck) => {
+    if (competitions.length > 0) {
+      for (let i = 0; i < competitions.length; i += 1) {
+        if (competitionToCheck === competitions[i].id) {
+          return competitions[i].admin;
+        }
+      }
+    } else return false;
+  };
 
   render() {
     var acctVerified = null;
@@ -188,6 +211,7 @@ class Dashboard extends Component {
                     getCompData={this.getCompData}
                     userName={this.state.userName}
                     email={this.state.email}
+                    reRenderDash={this.reRenderDash}
                   />
                 </Col>
               </Row>
@@ -226,7 +250,6 @@ class Dashboard extends Component {
             errorMsg: 'Something went very wrong.  Signout and signback in.',
           });
         } else if (response.data.status === 'tokenExpired') {
-          console.log(response.data.status);
           localStorage.removeItem('userToken');
           localStorage.removeItem('tokenExp');
           localStorage.removeItem('userID');
@@ -234,15 +257,22 @@ class Dashboard extends Component {
           tokenExpired = true;
           window.location.replace('/');
         } else {
+          //check if admin
+          let admin = null;
+          if (response.data.competitions.length > 0 && response.data.lastActiveCompetition) {
+            admin = self.getAdminStatus(response.data.competitions, response.data.lastActiveCompetition);
+          }
+
           self.setState({
             userName: response.data.name,
             email: response.data.email,
             competitions: response.data.competitions,
             lastActiveCompetition: response.data.lastActiveCompetition,
+            competitionAdmin: admin,
           });
 
           // check if last active competition datapoint exists in user
-          // if it doesn't then check to see if any competittions exist
+          // if it doesn't then check to see if any competitions exist
           // if none exist then don't get competition data
           if (response.data.lastActiveCompetition) {
             self.getCompData(response.data.lastActiveCompetition);
