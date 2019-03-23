@@ -5,7 +5,6 @@ import * as Sentry from '@sentry/browser';
 
 import colors from '../Styling/styles';
 import Config from '../Config/config';
-
 class RegistrationRecieved extends Component {
   constructor(props) {
     super(props);
@@ -73,9 +72,6 @@ class RegistrationRecieved extends Component {
         userLoggedIn: true,
       });
     }
-
-    //log google adwords event tracking
-    gtag('event', 'conversion', { send_to: 'AW-969553648/CutBCLinoZcBEPDtqM4D' });
   }
 }
 
