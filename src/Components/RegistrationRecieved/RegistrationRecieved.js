@@ -73,6 +73,9 @@ class RegistrationRecieved extends Component {
         userLoggedIn: true,
       });
     }
+
+    //log google adwords event tracking
+    gtag('event', 'conversion', { send_to: 'AW-969553648/CutBCLinoZcBEPDtqM4D' });
   }
 }
 
