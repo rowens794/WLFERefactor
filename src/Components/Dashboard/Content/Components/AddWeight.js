@@ -108,19 +108,21 @@ class PlayerList extends Component {
   }
 
   computeEndDate(start, period) {
+    console.log(start);
+    console.log(period);
     var days = null;
     switch (period) {
       case '8 Weeks':
-        days = 8 * 7;
+        days = 8 * 7 + 1;
         break;
       case '12 Weeks':
-        days = 12 * 7;
+        days = 12 * 7 + 1;
         break;
       case '16 Weeks':
-        days = 16 * 7;
+        days = 16 * 7 + 1;
         break;
       default:
-        days = 20 * 7;
+        days = 20 * 7 + 1;
     }
     let endDate = moment(new Date(start))
       .add(days, 'days')
@@ -142,6 +144,8 @@ class PlayerList extends Component {
         this.props.competitionData.CompetitionLength,
       );
     }
+
+    console.log(competitionHasEnded);
 
     return (
       <Container fluid style={{ padding: 0, marginTop: 0 }} className={css(styles.box)}>
