@@ -14,6 +14,7 @@ import XSCompList from './Components/XSCompList';
 import WinnersCircle from './Components/WinnersCircle';
 import ContentHolder from './Components/ContentHolder';
 import DeleteCompetition from './Components/DeleteCompetition';
+import PostHighlighter from './Components/PostHighlighter';
 
 class Content extends Component {
   constructor(props) {
@@ -120,6 +121,19 @@ class Content extends Component {
                 </ContentHolder>
               </Col>
             </Row>
+
+            {/* <Row style={{ paddingTop: 40, margin: 0 }}>
+              <Col
+                xs={{ size: 12, offset: 0 }}
+                sm={{ size: 12, offset: 0 }}
+                md={{ size: 12, offset: 0 }}
+                lg={{ size: 10, offset: 1 }}
+              >
+                <ContentHolder>
+                  <PostHighlighter />
+                </ContentHolder>
+              </Col>
+            </Row> */}
 
             <Row style={{ padding: '60px', margin: 0 }}>
               <Col

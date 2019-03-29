@@ -126,7 +126,7 @@ class PlayerList extends Component {
       .add(days, 'days')
       .format('M/D/YYYY');
 
-    if (new Date() > new Date(endDate)) {
+    if (new Date() >= new Date(endDate)) {
       return true;
     } else return false;
   }
