@@ -3,7 +3,7 @@
 //backendRootURL: 'http://localhost:3001'
 
 const config = {
-  backendRootURL: 'http://localhost:3001',
+  backendRootURL: 'https://fast-chamber-60180.herokuapp.com',
 };
 
 export default config;
