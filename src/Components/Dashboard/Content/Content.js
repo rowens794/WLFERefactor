@@ -93,19 +93,42 @@ class Content extends Component {
               </Col>
             </Row>
 
-            <Row style={{ padding: 0, margin: 0 }}>
+            <Row style={{ paddingTop: -40, margin: 0 }}>
               <Col
-                xs={{ size: 11, offset: 1 }}
-                sm={{ size: 11, offset: 1 }}
-                md={{ size: 10, offset: 1 }}
+                xs={{ size: 12, offset: 0 }}
+                sm={{ size: 12, offset: 0 }}
+                md={{ size: 12, offset: 0 }}
                 lg={{ size: 10, offset: 1 }}
               >
                 <ContentHolder>
+                  <PostHighlighter />
+                </ContentHolder>
+              </Col>
+            </Row>
+
+            <Row style={{ paddingTop: '40px', margin: 0 }}>
+              <Col
+                xs={{ size: 12, offset: 0 }}
+                sm={{ size: 12, offset: 0 }}
+                md={{ size: 10, offset: 1 }}
+                lg={{ size: 10, offset: 1 }}
+              >
+                {new Date() <= new Date(this.state.competitionData.StartDate) ? (
+                  <ContentHolder>
+                    <NotStartedAdmin
+                      compID={this.state.competitionData._id}
+                      startDate={this.state.competitionData.StartDate}
+                      competitionName={this.state.competitionData.CompetitionName}
+                      newUserEmail={null}
+                      newUserName={null}
+                    />
+                  </ContentHolder>
+                ) : null}
+                {/* This section was removed on 4.2.19
+                
+                  <ContentHolder>
                   {//test if the competition has started
-                  new Date() >= new Date(this.state.competitionData.StartDate) ? (
-                    //if it has then show the weight chart
-                    <Chart playerData={this.state.competitionData.Players} />
-                  ) : this.state.competitionAdmin ? (
+                  new Date() >= new Date(this.state.competitionData.StartDate) ? null : this.state.competitionAdmin ? ( //<Chart playerData={this.state.competitionData.Players} /> //if it has then show the weight chart
                     //if it hasn't and user is competition admin show add user
                     <NotStartedAdmin
                       compID={this.state.competitionData._id}
@@ -118,24 +141,11 @@ class Content extends Component {
                     //else show reminder to login on start date
                     <NotStarted startDate={this.state.competitionData.StartDate} />
                   )}
-                </ContentHolder>
+                </ContentHolder> */}
               </Col>
             </Row>
 
-            {/* <Row style={{ paddingTop: 40, margin: 0 }}>
-              <Col
-                xs={{ size: 12, offset: 0 }}
-                sm={{ size: 12, offset: 0 }}
-                md={{ size: 12, offset: 0 }}
-                lg={{ size: 10, offset: 1 }}
-              >
-                <ContentHolder>
-                  <PostHighlighter />
-                </ContentHolder>
-              </Col>
-            </Row> */}
-
-            <Row style={{ padding: '60px', margin: 0 }}>
+            <Row style={{ paddingTop: '60px', margin: 0 }}>
               <Col
                 xs={{ size: 12, offset: 0 }}
                 sm={{ size: 12, offset: 0 }}
@@ -165,7 +175,7 @@ class Content extends Component {
               </Col>
             </Row>
 
-            <Row style={{ paddingBottom: '40px', margin: 0 }}>
+            <Row style={{ paddingTop: '60px', paddingBottom: '40px', margin: 0 }}>
               <Col
                 xs={{ size: 12, offset: 0 }}
                 sm={{ size: 12, offset: 0 }}
