@@ -23,7 +23,12 @@ class WinnersCircle extends Component {
 
   calculateWinners(players, competition) {
     //set relevant variables
-    let totalPrizePool = competition.EntryFee * players.length;
+    var totalPrizePool = 0;
+    if (players) {
+      if (players.length > 0) {
+        totalPrizePool = competition.EntryFee * players.length;
+      }
+    }
     let interimPrizeAmt = null;
     let prizeAwardFreq = null;
 
