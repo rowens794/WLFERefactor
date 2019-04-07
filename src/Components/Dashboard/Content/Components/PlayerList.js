@@ -87,8 +87,11 @@ class PlayerList extends Component {
   render() {
     let players = this.props.playerData;
     var playersSorted = [];
+    console.log(players);
     if (players.length) {
-      playersSorted = this.computeWeightLost(players);
+      if (players.length > 0) {
+        playersSorted = this.computeWeightLost(players);
+      }
     }
 
     return (
