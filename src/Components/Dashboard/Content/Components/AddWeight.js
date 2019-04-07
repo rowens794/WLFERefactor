@@ -94,13 +94,17 @@ class PlayerList extends Component {
     let userEmail = normailizeEmail(email);
     var players = competitionData.Players;
 
-    for (let i = 0; i < players.length; i += 1) {
-      let participantEmail = normailizeEmail(players[i][1]);
-      if (participantEmail === userEmail) {
-        if (players[i][2][startDate]) {
-          return false;
-        } else {
-          return true;
+    if (players) {
+      if (players.length) {
+        for (let i = 0; i < players.length; i += 1) {
+          let participantEmail = normailizeEmail(players[i][1]);
+          if (participantEmail === userEmail) {
+            if (players[i][2][startDate]) {
+              return false;
+            } else {
+              return true;
+            }
+          }
         }
       }
     }
